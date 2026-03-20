@@ -18,6 +18,7 @@ const STATUSES = [
 
 const EMPTY_FORM = {
   date: new Date().toISOString().split('T')[0],
+  bookmaker: 'Unibet',
   sport: 'Football',
   type: 'Single',
   odd: '',
@@ -71,15 +72,28 @@ function BetForm({ onAdd, onUpdate, editingBet, onCancelEdit, showToast }) {
       </h3>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="text-[11px] font-bold text-slate-400 uppercase ml-1">Date</label>
-          <input
-            type="date"
-            value={form.date}
-            onChange={(e) => set('date', e.target.value)}
-            required
-            className="w-full p-4 rounded-2xl text-sm bg-slate-50 border-none mt-1 outline-none focus:ring-2 focus:ring-emerald-200"
-          />
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="text-[11px] font-bold text-slate-400 uppercase ml-1">Date</label>
+            <input
+              type="date"
+              value={form.date}
+              onChange={(e) => set('date', e.target.value)}
+              required
+              className="w-full p-4 rounded-2xl text-sm bg-slate-50 border-none mt-1 outline-none focus:ring-2 focus:ring-emerald-200"
+            />
+          </div>
+          <div>
+            <label className="text-[11px] font-bold text-slate-400 uppercase ml-1">Bookmaker</label>
+            <select
+              value={form.bookmaker}
+              onChange={(e) => set('bookmaker', e.target.value)}
+              className="w-full p-4 rounded-2xl text-sm bg-slate-50 border-none mt-1 outline-none focus:ring-2 focus:ring-emerald-200"
+            >
+              <option value="Unibet">Unibet</option>
+              <option value="Betclic">Betclic</option>
+            </select>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -183,7 +197,7 @@ function BetItem({ bet, onEdit, onDelete }) {
           {bet.sport} — x{Number(bet.odd).toFixed(2)}
         </p>
         <p className="text-[10px] text-slate-400 font-bold">
-          {new Date(bet.date).toLocaleDateString()} • {bet.type || 'Single'}
+          {new Date(bet.date).toLocaleDateString()} • {bet.bookmaker || 'N/A'} • {bet.type || 'Single'}
         </p>
       </div>
       <div className="flex items-center gap-4">

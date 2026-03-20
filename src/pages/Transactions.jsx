@@ -4,6 +4,7 @@ import { calculateTxValue, getTimelineCutoff } from '../utils/calc'
 
 const EMPTY_FORM = {
   date: new Date().toISOString().split('T')[0],
+  bookmaker: 'Unibet',
   type: 'deposit',
   amount: '',
 }
@@ -123,6 +124,18 @@ export default function Transactions({ txs, onAdd, onDelete, showToast }) {
             </div>
 
             <div>
+              <label className="text-[11px] font-bold text-slate-400 uppercase ml-1">Bookmaker</label>
+              <select
+                value={form.bookmaker}
+                onChange={(e) => set('bookmaker', e.target.value)}
+                className="w-full p-4 rounded-2xl text-sm bg-slate-50 border-none font-bold mt-1 outline-none focus:ring-2 focus:ring-emerald-200"
+              >
+                <option value="Unibet">Unibet</option>
+                <option value="Betclic">Betclic</option>
+              </select>
+            </div>
+
+            <div>
               <label className="text-[11px] font-bold text-slate-400 uppercase ml-1">Type</label>
               <select
                 value={form.type}
@@ -169,6 +182,7 @@ export default function Transactions({ txs, onAdd, onDelete, showToast }) {
             <thead>
               <tr className="text-slate-400 text-[11px] uppercase border-b border-slate-50">
                 <th className="pb-4">Date</th>
+                <th className="pb-4">Bookmaker</th>
                 <th className="pb-4">Type</th>
                 <th className="pb-4 text-right">Amount</th>
                 <th className="pb-4 text-center">Action</th>
@@ -188,6 +202,9 @@ export default function Transactions({ txs, onAdd, onDelete, showToast }) {
                     <tr key={t.id}>
                       <td className="py-4 text-xs font-medium text-slate-400">
                         {new Date(t.date || t.id).toLocaleDateString()}
+                      </td>
+                      <td className="py-4 text-sm font-bold">
+                        {t.bookmaker || 'N/A'}
                       </td>
                       <td className="py-4 text-sm font-bold capitalize">
                         {isDeposit ? 'Deposit' : 'Withdrawal'}
